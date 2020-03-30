@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $users = User::all();
+        $user_name_logged = Auth::user();
+        $total_users = count($users);
+        $last_user = User::latest('created_at')->first();
+        return view('home', [
+            'users' => $users,
+            'total' => $total_users,
+            'last_user' => $last_user,
+            'logged_name' => $user_name_logged
+        ]);
     }
 }

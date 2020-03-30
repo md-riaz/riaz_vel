@@ -1,20 +1,48 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">
+                    <h4> Dashboard</h4>
+                    <h6>New users on {{$last_user->created_at->format('l, jS \\of F Y')}}</h6>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
                     @endif
-
-                    You are logged in!
+                    <p>Welcome to Laravel Framework <strong>' {{$logged_name->name}} '</strong></p>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Created at</th>
+                                <th scope="col">Updated at</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $count = 1;
+                            @endphp
+                            @foreach ($users as $row)
+                            <tr>
+                                <th scope="row">{{ $count++ }}</th>
+                                <td> {{ $row->name }} </td>
+                                <td> {{ $row->email }} </td>
+                                <td> {{ $row->updated_at->format('l, jS \\of F Y h:i:s A') }}
+                                    &#8608; {{$row->updated_at->diffForHumans()}}</td>
+                                <td> {{ $row->created_at->format('l, jS \\of F Y h:i:s A') }} </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <p><strong> Total Member is: {{$total}}</strong></p>
                 </div>
             </div>
         </div>
