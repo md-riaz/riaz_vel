@@ -15,8 +15,8 @@
                         {{ session('status') }}
                     </div>
                     @endif
-                    <p>Welcome to Laravel Framework <strong>' {{$logged_name->name}} '</strong></p>
-                    <table class="table">
+                    <p>Welcome to Laravel Framework <strong>' {{ Auth::user()->name }} '</strong></p>
+                    <table class="table table-bordered">
                         <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -27,12 +27,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                            $count = 1;
-                            @endphp
                             @foreach ($users as $row)
                             <tr>
-                                <th scope="row">{{ $count++ }}</th>
+                                <th scope="row">{{ $users->firstItem() + $loop->index }}</th>
                                 <td> {{ $row->name }} </td>
                                 <td> {{ $row->email }} </td>
                                 <td> {{ $row->updated_at->format('l, jS \\of F Y h:i:s A') }}
@@ -42,7 +39,11 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <p><strong> Total Member is: {{$total}}</strong></p>
+                    {{-- Pagination Links --}}
+                    {{$users->links()}}
+                    <p><strong>Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of total
+                            {{$users->total()}} entries</strong></p>
+
                 </div>
             </div>
         </div>

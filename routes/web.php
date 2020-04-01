@@ -27,3 +27,7 @@ Route::get('/contact', 'FrontendController@contact');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Category routes
+Route::get('/add/category', 'CategoryController@AddCategory');
+Route::post('/store/category', 'CategoryController@StoreCategory');

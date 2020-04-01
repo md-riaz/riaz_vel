@@ -25,15 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $user_name_logged = Auth::user();
-        $total_users = count($users);
+        $users = User::paginate(3);
         $last_user = User::latest('created_at')->first();
-        return view('home', [
-            'users' => $users,
-            'total' => $total_users,
-            'last_user' => $last_user,
-            'logged_name' => $user_name_logged
-        ]);
+        return view('home', compact('users', 'last_user'));
     }
 }
