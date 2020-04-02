@@ -13,14 +13,33 @@
                     <tr>
                         <th>#</th>
                         <th>Category Name</th>
+                        <th>User Name</th>
                         <th>Created at</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($categories as $category)
                     <tr>
-                        <td></td>
+                        <td>{{$loop->index+1}}</td>
+                        <td>{{$category->category_name}}</td>
+                        <td>{{App\User::find($category->user_id)->name}}</td>
+                        <td>
+                            @if ($category->created_at)
+                            {{$category->created_at->diffForHumans()}}
+                            @else
+                            <span class="text-danger">No time availabe</span>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Button group">
+                                <a href="{{url('update/category/'.$category->id)}}" type="button"
+                                    class="btn btn-info">Update</a>
+                                <a href="" type="button" class="btn btn-danger">Delete</a>
+                            </div>
+                        </td>
                     </tr>
+                    @endforeach
                 </tbody>
                 <tfoot>
                     <tr>
@@ -35,6 +54,12 @@
                     Add Category
                 </div>
                 <div class="card-body">
+                    {{-- Print success notification from sesson --}}
+                    @if (session('success_message'))
+                    <div class="alert alert-success" role="alert">
+                        {{session('success_message')}}
+                    </div>
+                    @endif
                     <form method="post" action="{{ url('store/category')}}">
                         @csrf
                         <div class="form-group">

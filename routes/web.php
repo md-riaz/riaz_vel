@@ -31,3 +31,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Category routes
 Route::get('/add/category', 'CategoryController@AddCategory');
 Route::post('/store/category', 'CategoryController@StoreCategory');
+Route::get('/update/category/{id}', 'CategoryController@UpdateCategory');
