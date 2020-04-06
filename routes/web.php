@@ -3,17 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 
 // Welcome page
 Route::get('/', 'FrontendController@index');
@@ -32,3 +21,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/add/category', 'CategoryController@AddCategory');
 Route::post('/store/category', 'CategoryController@StoreCategory');
 Route::get('/update/category/{id}', 'CategoryController@UpdateCategory');
+Route::post('/update/category/', 'CategoryController@UpdateCategoryPost');
+Route::get('/delete/category/{id}', 'CategoryController@DestroyCategory');
+Route::get('restore/category/{id}', 'CategoryController@RestoreCategory');
+Route::get('hard-delete/category/{id}', 'CategoryController@HardDestroyCategory');
+
+
+// Profile
+Route::get('profile', 'ProfileController@index');
+Route::post('profile/post', 'ProfileController@profile_post');
+Route::post('password/post', 'ProfileController@password_post');

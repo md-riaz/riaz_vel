@@ -8,6 +8,15 @@
                     List Category
                 </div>
             </div>
+            @if (session('update_status'))
+            <div class="alert alert-success">{{session('update_status')}}</div>
+            @endif
+            @if (session('delete_status'))
+            <div class="alert alert-success">{{session('delete_status')}}</div>
+            @endif
+            @if (session('restore_message'))
+            <div class="alert alert-success">{{session('restore_message')}}</div>
+            @endif
             <table class="table table-light table-bordered">
                 <thead class="thead-dark">
                     <tr>
@@ -19,7 +28,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($categories as $category)
+                    @forelse ($categories as $category)
+
                     <tr>
                         <td>{{$loop->index+1}}</td>
                         <td>{{$category->category_name}}</td>
@@ -35,11 +45,65 @@
                             <div class="btn-group" role="group" aria-label="Button group">
                                 <a href="{{url('update/category/'.$category->id)}}" type="button"
                                     class="btn btn-info">Update</a>
-                                <a href="" type="button" class="btn btn-danger">Delete</a>
+                                <a href="{{url('delete/category/'.$category->id)}}" type="button"
+                                    class="btn btn-danger">Delete</a>
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <td colspan="10" class="text-danger">Nothing to show</td>
+                    @endforelse
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>...</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="card">
+                <div class="card-header bg-secondary text-danger">
+                    Deleted Category
+                </div>
+            </div>
+            @if (session('Fdelete_message'))
+            <div class="alert alert-danger">{{session('Fdelete_message')}}</div>
+            @endif
+            <table class="table table-light table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Category Name</th>
+                        <th>User Name</th>
+                        <th>Deleted at</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($categories_trash as $category)
+
+                    <tr>
+                        <td>{{$loop->index+1}}</td>
+                        <td>{{$category->category_name}}</td>
+                        <td>{{App\User::find($category->user_id)->name}}</td>
+                        <td>
+                            @if ($category->deleted_at)
+                            {{$category->deleted_at->diffForHumans()}}
+                            @else
+                            <span class="text-danger">No time availabe</span>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Button group">
+                                <a href="{{url('restore/category/'.$category->id)}}" type="button"
+                                    class="btn btn-secondary">Restore</a>
+                                <a href="{{url('hard-delete/category/'.$category->id)}}" type="button"
+                                    class="btn btn-danger">Hard Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <td colspan="10" class="text-danger">Nothing to show</td>
+                    @endforelse
                 </tbody>
                 <tfoot>
                     <tr>
@@ -78,6 +142,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
