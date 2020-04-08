@@ -6,6 +6,7 @@ use App\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
@@ -21,17 +22,25 @@ class CategoryController extends Controller
     public function StoreCategory(Request $request)
     {
         $validatedData = $request->validate([
-            'category_name' => 'required| unique:categories,category_name| max:100| min:3'
+            'category_name' => 'required| unique:categories,category_name| max:100| min:3',
+            'category_image' => 'required| image' //The file under validation must be an image (jpeg, png, bmp, or gif)
         ], [
             'category_name.required' => 'ও সখীগো, তোমার CATগরী ডা কই ??',
             'category_name.min' => 'কম লেখলে ট্যাহা দিমু না',
             'category_name.unique' => 'সেম নাম দেস ক্যান হালা?'
         ]);
 
-        Category::insert($validatedData + [
+        // insert a record and retrieve the id
+        $Category_id = Category::insertGetId([
+            'category_name' => $request->category_name,
             'user_id' => Auth::user()->id,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now() // Current timestamp
         ]);
+
+        $uploaded_img = $request->file('category_image'); // Get the file from user
+        $img_name = $Category_id . '.' . $uploaded_img->getClientOriginalExtension(); // rename image to id+file extension
+        $img_url = base_path('public/uploads/category_photos/' . $img_name); // image url with path to store
+        Image::make($uploaded_img)->save($img_url); // save the new image with new name
 
         $notification = 'Category Added Successfuly.';
         return back()->with('success_message', $notification);
