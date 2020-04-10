@@ -1,10 +1,10 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.master')
+@section('body')
 <div class="container">
     <div class="row">
         <div class="col-md-6 m-auto">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-inverse">
                     Profile Edit
                 </div>
                 <div class="card-body">
@@ -38,16 +38,12 @@
     <div class="row mt-5">
         <div class="col-md-6 m-auto">
             <div class="card">
-                <div class="card-header bg-warning">
+                <div class="card-header bg-inverse">
                     Change Password
                 </div>
                 <div class="card-body">
                     {{-- Print success notification from sesson --}}
-                    @if (session('success_message'))
-                    <div class="alert alert-success" role="alert">
-                        {{session('success_message')}}
-                    </div>
-                    @endif
+     
                     @if (session('password_change_status'))
                     <div class="alert alert-success" role="alert">
                         {{session('password_change_status')}}

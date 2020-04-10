@@ -10,6 +10,17 @@ use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
+        /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     public function AddCategory()
     {
         $categories = Category::all();
@@ -41,6 +52,10 @@ class CategoryController extends Controller
         $img_name = $Category_id . '.' . $uploaded_img->getClientOriginalExtension(); // rename image to id+file extension
         $img_url = base_path('public/uploads/category_photos/' . $img_name); // image url with path to store
         Image::make($uploaded_img)->save($img_url); // save the new image with new name
+
+        Category::findOrFail($Category_id)->update([
+            'category_img' => $img_name
+        ]);
 
         $notification = 'Category Added Successfuly.';
         return back()->with('success_message', $notification);
