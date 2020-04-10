@@ -10,7 +10,7 @@ use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
-        /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -20,7 +20,7 @@ class CategoryController extends Controller
         $this->middleware('auth');
     }
 
-    
+
     public function AddCategory()
     {
         $categories = Category::all();
