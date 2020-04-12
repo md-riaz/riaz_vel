@@ -2,23 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Message;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        return view('index', [
+            'categories' => Category::all()
+        ]);
     }
+
     public function about()
     {
-        $var1 = 317;
-        $arrayVar = ["CIT", 3, 1, 7];
-
-        return view('about', compact('var1', 'arrayVar'));
+        return view('site.about');
     }
+
     public function contact()
     {
-        return view('contact');
+        return view('site.contact');
+    }
+
+    public function ContactStore()
+    {
+        // Validate data and store on database
+        Message::create(request()->validate([
+            'name' => 'required | min:3',
+            'email' => 'required | email:rfc',
+            'subject' => 'required',
+            'message' => 'required'
+        ]));
+
+       return redirect('contact#cmsg')->with('msg', 'Congrats, We have received your message');
     }
 }

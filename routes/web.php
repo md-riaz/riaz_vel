@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'FrontendController@index');
 
 // about page
-Route::get('/about', 'FrontendController@about');
+Route::get('/about', 'FrontendController@about')->name('about');
 
 // contact page
-Route::get('/contact', 'FrontendController@contact');
+Route::get('/contact', 'FrontendController@contact')->name('contact');
+Route::post('contact/post', 'FrontendController@ContactStore');
 
 Auth::routes(['verify' => true]);
 

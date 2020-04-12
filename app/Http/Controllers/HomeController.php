@@ -27,6 +27,6 @@ class HomeController extends Controller
     {
         $users = User::paginate(3);
         $last_user = User::latest('created_at')->first();
-        return view('home', compact('users', 'last_user'));
+        return view('admin.home', compact('users', 'last_user'));
     }
 }

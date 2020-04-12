@@ -182,7 +182,7 @@
                                 </div>
                             </li>
                             {{-- <li class="header-notification">
-                                
+
                             </li> --}}
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
@@ -261,6 +261,13 @@
                                     <a href="{{url('/add/category')}}">
                                         <span class="pcoded-micon"><i class="ti-bag"></i></span>
                                         <span class="pcoded-mtext">Category</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{url('/')}}">
+                                        <span class="pcoded-micon"><i class="feather icon-navigation-2"></i></span>
+                                        <span class="pcoded-mtext">Visit Site</span>
                                     </a>
                                 </li>
 
