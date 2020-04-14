@@ -6,6 +6,7 @@ use App\Banner;
 use App\Category;
 use App\Message;
 use App\Product;
+use App\Testimonial;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,7 @@ class FrontendController extends Controller
             'categories' => Category::all(),
             'banners' => Banner::all(),
             'products' => Product::all(),
+            'testimonials' => Testimonial::all(),
         ]);
     }
 

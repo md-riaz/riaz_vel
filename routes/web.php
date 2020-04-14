@@ -61,3 +61,11 @@ Route::post('product/update/', 'ProductController@update');
 Route::get('product/delete/{product}', 'ProductController@destroy');
 Route::get('product/restore/{id}', 'ProductController@restore');
 Route::get('product/hard-delete/{id}', 'ProductController@harddestroy');
+
+
+// Testimonial
+Route::get('add/testimonials', 'TestimonialController@index');
+Route::post('store/testimonial', 'TestimonialController@store');
+Route::get('update/testimonial/{testimonial}', 'TestimonialController@edit');
+Route::post('update/testimonial', 'TestimonialController@update');
+Route::get('/delete/testimonial/{testimonial}', 'TestimonialController@destroy');

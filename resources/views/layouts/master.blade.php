@@ -291,6 +291,13 @@
                                     </a>
                                 </li>
 
+                                <li class="{{Request::is('add/testimonials') || Request::is('update/testimonial/*') ? 'active' : ''}}">
+                                    <a href="{{url('add/testimonials')}}">
+                                        <span class="pcoded-micon"><i class="icofont icofont-quote-left"></i></span>
+                                        <span class="pcoded-mtext">Testimonials</span>
+                                    </a>
+                                </li>
+
 
                             </ul>
                         </div>

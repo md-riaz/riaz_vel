@@ -188,12 +188,12 @@
                 <div class="card-block table-border-style">
 
                     {{-- Print success notification from sesson --}}
-                    @if (session('banne_photo'))
+                    @if (session('Fdelete_banner'))
                         <div class="alert alert-success icons-alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <i class="icofont icofont-close-line-circled"></i>
                             </button>
-                            <p><strong>Success!</strong> {{session('banner_photo')}}</p>
+                            <p><strong>Success!</strong> {{session('Fdelete_banner')}}</p>
                         </div>
                     @endif
 
