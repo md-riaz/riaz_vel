@@ -41,19 +41,33 @@
             <div class="card-body">
                 {{-- Print success notification from sesson --}}
                 @if (session('success_message'))
-                <div class="alert alert-success" role="alert">
-                    {{session('success_message')}}
-                </div>
+                    <div class="alert alert-success" role="alert">
+                        {{session('success_message')}}
+                    </div>
                 @endif
-                <form method="post" action="{{ url('update/category')}}">
+                <form method="post" action="{{ url('update/category')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="category_name">Category Name</label>
                         <input id="category_id" class="form-control" type="hidden" name="category_id"
-                            value="{{$category->id}}">
+                               value="{{$category->id}}">
                         <input id="category_name" class="form-control" type="text" name="category_name"
-                            value="{{$category->category_name}}">
+                               value="{{$category->category_name}}">
                         @error('category_name')
+                        <div class="alert alert-warning" role="alert">
+                            {{$message}}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="category_photo">Category Current Photo</label>
+                        <img class="form-control" src="{{asset('uploads/category_photos/'.$category->category_img)}}"
+                             alt="">
+                    </div>
+                    <div class="form-group">
+                        <label for="category_photo">New Category Photo</label>
+                        <input id="category_photo" class="form-control" type="file" name="category_photo">
+                        @error('category_photo')
                         <div class="alert alert-warning" role="alert">
                             {{$message}}
                         </div>

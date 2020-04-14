@@ -32,7 +32,7 @@ class CategoryController extends Controller
     public function StoreCategory()
     {
         request()->validate([
-            'category_name' => 'required| unique:categories,category_name| max:100| min:3',
+            'category_name' => 'required| unique:categories,category_name| max:100',
             'category_image' => 'required| image' //The file under validation must be an image (jpeg, png, bmp, or gif)
         ], ['category_name.required' => 'Category Name is required', 'category_name.min' => 'কম লেখলে ট্যাহা দিমু না', 'category_name.unique' => 'সেম নাম দেস ক্যান হালা?']);
 
@@ -65,7 +65,24 @@ class CategoryController extends Controller
 
     public function UpdateCategoryPost()
     {
-        Category::findOrFail(request()->category_id)->update([
+        // store the id to a variable
+        $id = request()->category_id;
+        // If new photo is uploaded then unlink old photo from database and store new photo info
+        if (request()->hasFile('category_photo')) {
+            request()->validate([
+                'category_photo' => 'image'
+            ]);
+            unlink(base_path('public/uploads/category_photos/' . Category::findOrFail($id)->category_img));
+            $uploaded_img = request()->file('category_photo'); // Get the file from user
+            $img_name = $id . '.' . $uploaded_img->getClientOriginalExtension(); // rename image to id+file extension
+            $img_url = base_path('public/uploads/category_photos/' . $img_name); // image url with path to store
+            Image::make($uploaded_img)->resize(600, 470)->save($img_url); // save the new image with new name
+            Category::findOrFail($id)->update([
+                'category_img' => $img_name
+            ]);
+        }
+        // Or just update the name
+        Category::findOrFail($id)->update([
             'category_name' => request()->category_name
         ]);
         return redirect('/add/category')->with('update_status', 'Category Updated Successfully');

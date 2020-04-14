@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Banner;
 use App\Category;
 use App\Message;
+use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,9 @@ class FrontendController extends Controller
     public function index()
     {
         return view('index', [
-            'categories' => Category::all()
+            'categories' => Category::all(),
+            'banners' => Banner::all(),
+            'products' => Product::all(),
         ]);
     }
 
@@ -20,6 +24,14 @@ class FrontendController extends Controller
     {
         return view('site.about');
     }
+
+    public function product($id)
+    {
+        return view('site.product', [
+            'product' => Product::findOrFail($id)->first()
+        ]);
+    }
+
 
     public function contact()
     {
@@ -36,6 +48,7 @@ class FrontendController extends Controller
             'message' => 'required'
         ]));
 
-       return redirect('contact#cmsg')->with('msg', 'Congrats, We have received your message');
+        return redirect('contact#cmsg')->with('msg', 'Congrats, We have received your message');
     }
+
 }

@@ -10,9 +10,20 @@ Route::get('/', 'FrontendController@index');
 // about page
 Route::get('/about', 'FrontendController@about')->name('about');
 
+// product page
+Route::get('product/{id}', 'FrontendController@product');
+
 // contact page
 Route::get('/contact', 'FrontendController@contact')->name('contact');
 Route::post('contact/post', 'FrontendController@ContactStore');
+
+// Message control admin
+Route::get('/messages', 'MessageController@index')->name('messages');
+Route::get('/messages/show/{message}', 'MessageController@show');
+Route::get('messages/trash', 'MessageController@trash')->name('messages/trash');
+Route::get('/messages/delete/{message}', 'MessageController@destroy');
+Route::get('/messages/hard-delete/{id}', 'MessageController@HardDelete');
+Route::get('/messages/restore/{id}', 'MessageController@restore');
 
 Auth::routes(['verify' => true]);
 
@@ -32,3 +43,21 @@ Route::get('hard-delete/category/{id}', 'CategoryController@HardDestroyCategory'
 Route::get('profile', 'ProfileController@index');
 Route::post('profile/post', 'ProfileController@profile_post');
 Route::post('password/post', 'ProfileController@password_post');
+
+// Banner
+Route::get('add/banner', 'BannerController@index')->name('add/banner');
+Route::get('update/banner/{banner}', 'BannerController@edit');
+Route::post('update/banner/', 'BannerController@update');
+Route::post('store/banner', 'BannerController@store');
+Route::get('delete/banner/{banner}', 'BannerController@destroy');
+Route::get('restore/banner/{banner}', 'BannerController@restore');
+Route::get('hard-delete/banner/{banner}', 'BannerController@hardDelete');
+
+// Products
+Route::get('add/products', 'ProductController@index')->name('add/products');
+Route::post('store/product', 'ProductController@store');
+Route::get('product/update/{product}', 'ProductController@edit');
+Route::post('product/update/', 'ProductController@update');
+Route::get('product/delete/{product}', 'ProductController@destroy');
+Route::get('product/restore/{id}', 'ProductController@restore');
+Route::get('product/hard-delete/{id}', 'ProductController@harddestroy');
