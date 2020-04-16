@@ -238,7 +238,7 @@
                             </div>
                             <div class="product-content">
                                 <h3><a href="{{url('product/'.$product->id)}}">{{$product->product_name}}</a></h3>
-                                <p class="pull-left">${{$product->product_price}}</p>
+                                <p class="pull-left">BDT. {{$product->product_price}}</p>
                                 <ul class="pull-right d-flex">
                                     <li><i class="fa fa-star"></i></li>
                                     <li><i class="fa fa-star"></i></li>

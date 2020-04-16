@@ -11,7 +11,7 @@
                     <div class="breadcumb-wrap text-center">
                         <h2>About us</h2>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="{{url('/')}}">Home</a></li>
                             <li><span>About</span></li>
                         </ul>
                     </div>

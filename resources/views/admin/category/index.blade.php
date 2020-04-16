@@ -50,7 +50,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="category_name">Category Name</label>
-                        <input id="category_name" class="form-control" type="text" name="category_name">
+                        <input id="category_name" class="form-control" type="text" name="category_name" required>
                         @error('category_name')
                         <div class="alert alert-warning" role="alert">
                             {{$message}}
@@ -60,7 +60,7 @@
 
                     <div class="form-group">
                         <label for="category_image">Category Image</label>
-                        <input type="file" class="form-control-file" id="category_image" name="category_image">
+                        <input type="file" class="form-control-file" id="category_image" name="category_image" required>
                         @error('category_image')
                         <div class="alert alert-warning" role="alert">
                             {{$message}}

@@ -4,11 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Product;
+use App\ProductMultiplePhoto;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +42,8 @@ class ProductController extends Controller
      */
     public function store()
     {
-        $validateData = request()->validate([
+        // Create new product
+        $product = Product::create(request()->validate([
             'product_name' => 'required',
             'category_id' => 'required',
             'product_price' => 'required',
@@ -39,18 +51,36 @@ class ProductController extends Controller
             'product_quantity' => 'required',
             'product_short_description' => 'required',
             'product_long_description' => 'required',
-        ]);
-        $product = Product::create($validateData);
-
+        ]));
+        // Get the id and rename the img
         $id = $product->id;
         $uploaded_img = request()->file('product_thumbnail_photo'); // Get the file from user
         $img_name = $id . '.' . $uploaded_img->getClientOriginalExtension(); // rename image to id+file extension
         $img_url = base_path('public/uploads/product_photos/' . $img_name); // image url with path to store
         Image::make($uploaded_img)->resize(600, 622)->save($img_url); // save the new image with new name
-
+        // Update img field with new name
         Product::findOrFail($id)->update([
             'product_thumbnail_photo' => $img_name
         ]);
+        /* Multiple photo upload start */
+        // Set a counter
+        $counter = 0;
+        // Loop through each uploaded img as a variable and store in a folder
+        foreach (\request()->file('product_photos') as $product_photo) {
+            $uploaded_img = $product_photo; // Get the file from user
+            $img_name = $id . "-" . $counter . '.' . $uploaded_img->getClientOriginalExtension(); // rename image to id+file extension
+            $img_url = base_path('public/uploads/product_multiple_photos/' . $img_name); // image url with path to store
+            Image::make($uploaded_img)->resize(600, 550)->save($img_url); // save the new image with new name
+            // insert all photo name and product id to a new table
+            ProductMultiplePhoto::create([
+                'product_id' => $id,
+                'photo_name' => $img_name
+            ]);
+            $counter++;
+        }
+
+        /* Multiple photo upload end */
+
 
         $notification = 'Product Added Successfully.';
         return back()->with('success_message', $notification);

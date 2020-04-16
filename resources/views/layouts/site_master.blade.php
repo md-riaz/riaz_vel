@@ -6,11 +6,11 @@
     <title>@yield('site_title')</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="{{ asset('frontend_assets') }}/images/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('frontend_assets/images/favicon.png') }}">
     <!-- Place favicon.ico in the root directory -->
     <!-- all css here -->
     <!-- bootstrap v4.0.0-beta.2 css -->
-    <link rel="stylesheet" href="{{ asset('frontend_assets') }}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('frontend_assets/css/bootstrap.min.css') }}">
     <!-- owl.carousel.2.0.0-beta.2.4 css -->
     <link rel="stylesheet" href="{{ asset('frontend_assets') }}/css/owl.carousel.min.css">
     <!-- font-awesome v4.6.3 css -->
@@ -70,8 +70,8 @@
                             <a href="javascript:void(0);"><i class="fa fa-user"></i> My Account <i
                                     class="fa fa-angle-down"></i></a>
                             <ul class="dropdown_style">
-                                <li><a href="login.html">Login</a></li>
-                                <li><a href="register.html">Register</a></li>
+                                <li><a href="{{url('/login')}}">Login</a></li>
+                                <li><a href="{{url('/register')}}">Register</a></li>
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
                                 <li><a href="wishlist.html">wishlist</a></li>
@@ -111,32 +111,19 @@
                             <li class="{{Request::path() === 'about' ? 'active' : ''}}"><a href="{{route('about')}}">About</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);">Shop <i class="fa fa-angle-down"></i></a>
-                                <ul class="dropdown_style">
-                                    <li><a href="shop.html">Shop Page</a></li>
-                                    <li><a href="single-product.html">Product Details</a></li>
-                                    <li><a href="cart.html">Shopping cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                </ul>
+                                <a href="{{url('shop')}}">Shop Page</a>
                             </li>
                             <li>
                                 <a href="javascript:void(0);">Pages <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown_style">
-                                    <li><a href="about.html">About Page</a></li>
-                                    <li><a href="single-product.html">Product Details</a></li>
                                     <li><a href="cart.html">Shopping cart</a></li>
                                     <li><a href="checkout.html">Checkout</a></li>
                                     <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
+                                    <li><a href="{{url('faqs')}}">FAQ</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>
-                                <ul class="dropdown_style">
-                                    <li><a href="blog.html">blog Page</a></li>
-                                    <li><a href="blog-details.html">blog Details</a></li>
-                                </ul>
+                                <a href="{{url('blogs')}}">Blog </a>
                             </li>
                             <li class="{{Request::path() === 'contact' ? 'active' : ''}}"><a
                                     href="{{route('contact')}}">Contact</a></li>
@@ -178,44 +165,37 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>3</span></a>
+                            @php
+                                $sub_total = 0;
+                            @endphp
+                            <a href="javascript:void(0);"><i class="flaticon-shop"></i>
+                                <span>
+                                   {{\App\Cart::where('ip_address', request()->ip())->count()}}
+                                </span></a>
                             <ul class="cart-wrap dropdown_style">
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{ asset('frontend_assets') }}/images/cart/1.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{ asset('frontend_assets') }}/images/cart/3.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{ asset('frontend_assets') }}/images/cart/2.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                @forelse(\App\Cart::where('ip_address', request()->ip())->get() as $cart)
+                                    <li class="cart-items">
+                                        <div class="cart-img">
+                                            <img src="{{ asset('frontend_assets') }}/images/cart/1.jpg" alt="">
+                                        </div>
+                                        <div class="cart-content">
+                                            <a href="#">{{$cart->product->product_name}}</a>
+                                            <span>QTY : {{$cart->quantity}}</span>
+                                            <p>BDT. {{$cart->product->product_price*$cart->quantity}}</p>
+                                            <i class="fa fa-times"></i>
+                                            @php
+                                                $sub_total = $sub_total + ($cart->product->product_price*$cart->quantity);
+                                            @endphp
+                                        </div>
+                                    </li>
+                                @empty
+                                    <p>No item selected</p>
+                                @endforelse
+                                <li>Subtotol: <span class="pull-right">BDT. {{$sub_total}}</span></li>
                                 <li>
-                                    <button>Check Out</button>
+                                    <a href="{{url('cart')}}">
+                                        <button>Check Out</button>
+                                    </a>
                                 </li>
                             </ul>
                         </li>

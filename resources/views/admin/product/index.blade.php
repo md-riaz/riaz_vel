@@ -91,6 +91,17 @@
                             </div>
                             @enderror
                         </div>
+
+                        <div class="form-group">
+                            <label for="product_photos">Product Photos</label>
+                            <input required type="file" class="form-control-file" id="product_photos"
+                                   name="product_photos[]" multiple>
+                            @error('product_photos')
+                            <div class="alert alert-warning" role="alert">
+                                {{$message}}
+                            </div>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="product_quantity">Product Quantity</label>
                             <input required type="number" step="0.01" class="form-control" id="product_quantity"

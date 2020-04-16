@@ -4,18 +4,33 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-// Welcome page
+// Home Page
 Route::get('/', 'FrontendController@index');
 
-// about page
+// About Page
 Route::get('/about', 'FrontendController@about')->name('about');
 
-// product page
+// Product Page
 Route::get('product/{id}', 'FrontendController@product');
 
-// contact page
+// Contact Page
 Route::get('/contact', 'FrontendController@contact')->name('contact');
 Route::post('contact/post', 'FrontendController@ContactStore');
+
+// FAQ
+Route::get('/faqs', 'FrontendController@Faq');
+
+// Shop
+Route::get('/shop', 'FrontendController@Shop');
+
+// Blog Page
+Route::get('/blogs', 'FrontendController@Blog');
+Route::get('/blog/{blog}', 'FrontendController@showBlog');
+
+// Cart
+Route::post('/add/to/cart', 'CartController@CartAdd');
+Route::get('cart', 'CartController@show');
+
 
 // Message control admin
 Route::get('/messages', 'MessageController@index')->name('messages');
@@ -69,3 +84,18 @@ Route::post('store/testimonial', 'TestimonialController@store');
 Route::get('update/testimonial/{testimonial}', 'TestimonialController@edit');
 Route::post('update/testimonial', 'TestimonialController@update');
 Route::get('/delete/testimonial/{testimonial}', 'TestimonialController@destroy');
+
+
+// FAQ
+Route::get('add/faqs', 'FaqController@index');
+Route::post('store/faq', 'FaqController@store');
+Route::get('/delete/faq/{faq}', 'FaqController@destroy');
+
+// FAQ
+Route::get('add/blogs', 'BlogController@index');
+Route::post('store/blog', 'BlogController@store');
+Route::get('update/blog/{blog}', 'BlogController@edit');
+Route::post('blog/update/', 'BlogController@update');
+Route::get('delete/blog/{blog}', 'BlogController@destroy');
+Route::get('restore/blog/{id}', 'BlogController@restore');
+Route::get('hard-delete/blog/{id}', 'BlogController@harddestroy');

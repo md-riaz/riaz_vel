@@ -24,11 +24,6 @@
     <!-- Required Fremwork -->
     <link rel="stylesheet" type="text/css"
           href="{{ asset('dashboard_assets\bower_components\bootstrap\css\bootstrap.min.css') }}">
-    <!-- jquery file upload Frame work -->
-    <link href="{{ asset('dashboard_assets\assets\pages\jquery.filer\css\jquery.filer.css') }}" type="text/css"
-          rel="stylesheet">
-    <link href="{{ asset('dashboard_assets/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css') }}"
-          type="text/css" rel="stylesheet">
     <!-- themify-icons line icon -->
     <link rel="stylesheet" type="text/css"
           href="{{ asset('dashboard_assets\assets\icon\themify-icons\themify-icons.css') }}">
@@ -299,6 +294,22 @@
                                 </li>
 
 
+                                <li class="{{Request::is('add/faqs') || Request::is('update/faq/*') ? 'active' : ''}}">
+                                    <a href="{{url('add/faqs')}}">
+                                        <span class="pcoded-micon"><i class="icofont icofont-support-faq"></i></span>
+                                        <span class="pcoded-mtext">FAQ'S</span>
+                                    </a>
+                                </li>
+
+
+                                <li class="{{Request::is('add/blogs') || Request::is('update/blog/*') ? 'active' : ''}}">
+                                    <a href="{{url('add/blogs')}}">
+                                        <span class="pcoded-micon"><i class="icofont icofont-justify-left"></i></span>
+                                        <span class="pcoded-mtext">BLOG'S</span>
+                                    </a>
+                                </li>
+
+
                             </ul>
                         </div>
                     </nav>
@@ -359,14 +370,7 @@
 <script src="{{ asset('dashboard_assets\assets\js\pcoded.min.js') }}"></script>
 <script src="{{ asset('dashboard_assets\assets\js\vartical-layout.min.js') }}"></script>
 <script src="{{ asset('dashboard_assets\assets\js\jquery.mCustomScrollbar.concat.min.js') }}"></script>
-<!-- jquery file upload js -->
-<script src="{{ asset('dashboard_assets\assets\pages\jquery.filer\js\jquery.filer.min.js') }}"></script>
-<script src="{{ asset('dashboard_assets\assets\pages\filer\custom-filer.js') }}" type="text/javascript"></script>
-<script src="{{ asset('dashboard_assets\assets\pages\filer\jquery.fileuploads.init.js') }}" type="text/javascript">
-</script>
-<!-- Select 2 js -->
-<script type="text/javascript"
-        src="{{ asset('dashboard_assets\bower_components\select2\js\select2.full.min.js')}}"></script>
+
 <!-- Custom js -->
 <script type="text/javascript" src="{{ asset('dashboard_assets\assets\js\script.js') }}"></script>
 

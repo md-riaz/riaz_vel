@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('product_price');
             $table->string('product_thumbnail_photo')->nullable();
             $table->integer('product_quantity');
-            $table->string('product_short_description');
+            $table->mediumText('product_short_description');
             $table->longText('product_long_description');
             $table->timestamps();
             $table->softDeletes();

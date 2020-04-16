@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcumb-wrap text-center">
-                        <h2>Shop Page</h2>
+                        <h2>{{$product->product_name}}</h2>
                         <ul>
                             <li><a href="{{'/'}}">Home</a></li>
                             <li><span>Shop</span></li>
@@ -28,43 +28,28 @@
                     <div class="product-single-img">
                         <div class="product-active owl-carousel">
                             <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/1.jpg" alt="">
+                                <img src="{{asset('uploads/product_photos/'.$product->product_thumbnail_photo)}}"
+                                     alt="Not Found">
                             </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/2.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/3.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/4.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/5.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/6.jpg" alt="">
-                            </div>
+                            @foreach($product_photos as $product_photo)
+                                <div class="item">
+                                    <img src="{{asset('uploads/product_multiple_photos/'.$product_photo->photo_name)}}"
+                                         alt="Not Found">
+                                </div>
+                            @endforeach
+
                         </div>
                         <div class="product-thumbnil-active  owl-carousel">
                             <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/1.jpg" alt="">
+                                <img src="{{asset('uploads/product_photos/'.$product->product_thumbnail_photo)}}"
+                                     alt="Not Found">
                             </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/2.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/3.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/4.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/5.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('frontend_assets')}}/images/product/product-details/6.jpg" alt="">
-                            </div>
+                            @foreach($product_photos as $product_photo)
+                                <div class="item">
+                                    <img src="{{asset('uploads/product_multiple_photos/'.$product_photo->photo_name)}}"
+                                         alt="Not Found">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -72,7 +57,7 @@
                     <div class="product-single-content">
                         <h3>{{$product->product_name}}</h3>
                         <div class="rating-wrap fix">
-                            <span class="pull-left">${{$product->product_price}}</span>
+                            <span class="pull-left">BDT. {{$product->product_price}}</span>
                             <ul class="rating pull-right">
                                 <li><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
@@ -82,16 +67,38 @@
                                 <li>(05 Customar Review)</li>
                             </ul>
                         </div>
-                        <p>{{$product->product_short_description}}</p>
+                        <p>{!! nl2br(e($product->product_short_description)) !!}</p>
                         <ul class="input-style">
-                            <li class="quantity cart-plus-minus">
-                                <input type="text" value="1"/>
-                            </li>
-                            <li><a href="cart.html">Add to Cart</a></li>
+                            <form action="{{url('/add/to/cart')}}" method="post">
+                                @csrf
+                                <input type="hidden" value="{{$product->id}}" name="product_id"/>
+                                <li class="quantity cart-plus-minus">
+                                    <input type="text" value="1" name="quantity"/>
+                                </li>
+                                <li>
+
+                                    <button type="submit" class="btn-cart">Add to Cart</button>
+
+                                    <style>
+                                        .btn-cart {
+                                            height: 35px;
+                                            line-height: 35px;
+                                            text-align: center;
+                                            width: 120px;
+                                            background: #ef4836;
+                                            color: #fff !important;
+                                            display: block;
+                                            margin-left: 30px;
+                                            cursor: pointer;
+                                            border: none;
+                                        }
+                                    </style>
+                                </li>
+                            </form>
                         </ul>
                         <ul class="cetagory">
                             <li>Categories:</li>
-                            <li><a href="#">{{App\Category::findOrFail($product->category_id)->category_name}}</a></li>
+                            <li><a href="#">{{$product->relationtocategory->category_name}}</a></li>
                         </ul>
                         <ul class="socil-icon">
                             <li>Share :</li>
@@ -118,7 +125,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="description">
                             <div class="description-wrap">
-                                <p>{{$product->product_long_description}}</p>
+                                <p>{!! nl2br(e($product->product_long_description)) !!}</p>
                             </div>
                         </div>
                         <div class="tab-pane" id="tag">
@@ -377,90 +384,33 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="featured-product-wrap">
-                        <div class="featured-product-img">
-                            <img src="{{asset('frontend_assets')}}/images/product/1.jpg" alt="">
-                        </div>
-                        <div class="featured-product-content">
-                            <div class="row">
-                                <div class="col-7">
-                                    <h3><a href="shop.html">Nature Honey</a></h3>
-                                    <p>$219.56</p>
-                                </div>
-                                <div class="col-5 text-right">
-                                    <ul>
-                                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        <li><a href="cart.html"><i class="fa fa-heart"></i></a></li>
-                                    </ul>
+                @forelse($related as $product)
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="featured-product-wrap">
+                            <div class="featured-product-img">
+                                <img src="{{asset('uploads/product_photos/'.$product->product_thumbnail_photo)}}"
+                                     alt="">
+                            </div>
+                            <div class="featured-product-content">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h3><a href="{{url('/product/'.$product->id)}}">{{$product->product_name}}</a>
+                                        </h3>
+                                        <p>BDT. {{$product->product_price}}</p>
+                                    </div>
+                                    <div class="col-5 text-right">
+                                        <ul>
+                                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a href="cart.html"><i class="fa fa-heart"></i></a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="featured-product-wrap">
-                        <div class="featured-product-img">
-                            <img src="{{asset('frontend_assets')}}/images/product/2.jpg" alt="">
-                        </div>
-                        <div class="featured-product-content">
-                            <div class="row">
-                                <div class="col-7">
-                                    <h3><a href="shop.html">Olive Oil</a></h3>
-                                    <p>$354.75</p>
-                                </div>
-                                <div class="col-5 text-right">
-                                    <ul>
-                                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        <li><a href="cart.html"><i class="fa fa-heart"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="featured-product-wrap">
-                        <div class="featured-product-img">
-                            <img src="{{asset('frontend_assets')}}/images/product/3.jpg" alt="">
-                        </div>
-                        <div class="featured-product-content">
-                            <div class="row">
-                                <div class="col-7">
-                                    <h3><a href="shop.html">Sunrise Oil</a></h3>
-                                    <p>$214.80</p>
-                                </div>
-                                <div class="col-5 text-right">
-                                    <ul>
-                                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        <li><a href="cart.html"><i class="fa fa-heart"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="featured-product-wrap">
-                        <div class="featured-product-img">
-                            <img src="{{asset('frontend_assets')}}/images/product/4.jpg" alt="">
-                        </div>
-                        <div class="featured-product-content">
-                            <div class="row">
-                                <div class="col-7">
-                                    <h3><a href="shop.html">Coconut Oil</a></h3>
-                                    <p>$241.00</p>
-                                </div>
-                                <div class="col-5 text-right">
-                                    <ul>
-                                        <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                        <li><a href="cart.html"><i class="fa fa-heart"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @empty
+                    <p>No relative product to show</p>
+                @endforelse
             </div>
         </div>
     </div>
