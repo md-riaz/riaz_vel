@@ -30,21 +30,21 @@
                     @if(session('status'))
                         <div class="alert alert-success"> {{session('status')}}</div>
                     @endif
+                    <form action="{{url('cart/post')}}" method="post">
+                        @csrf
+                        <table class="table-responsive cart-wrap">
+                            <thead>
+                            <tr>
+                                <th class="images">Image</th>
+                                <th class="product">Product</th>
+                                <th class="ptice">Price</th>
+                                <th class="quantity">Quantity</th>
+                                <th class="total">Total</th>
+                                <th class="remove">Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                    <table class="table-responsive cart-wrap">
-                        <thead>
-                        <tr>
-                            <th class="images">Image</th>
-                            <th class="product">Product</th>
-                            <th class="ptice">Price</th>
-                            <th class="quantity">Quantity</th>
-                            <th class="total">Total</th>
-                            <th class="remove">Remove</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <form action="{{url('cart/post')}}" method="post">
-                            @csrf
                             @php
                                 $sub_total = 0;
                             @endphp
@@ -73,17 +73,17 @@
                             @empty
                                 <td colspan="10">No Products</td>
                             @endforelse
-                        </form>
-                        </tbody>
-                    </table>
-                    <div class="row mt-60">
-                        <div class="col-xl-4 col-lg-5 col-md-6 ">
-                            <div class="cartcupon-wrap">
-                                <ul class="d-flex">
-                                    <li>
-                                        <button>Update Cart</button>
-                                    </li>
-                                    <li><a href="{{url('shop')}}">Continue Shopping</a></li>
+
+                            </tbody>
+                        </table>
+                        <div class="row mt-60">
+                            <div class="col-xl-4 col-lg-5 col-md-6 ">
+                                <div class="cartcupon-wrap">
+                                    <ul class="d-flex">
+                                        <li>
+                                            <button type="submit">Update Cart</button>
+                                        </li>
+                                        <li><a href="{{url('shop')}}">Continue Shopping</a></li>
                                 </ul>
                                 <h3>Cupon</h3>
                                 <p>Enter Your Cupon Code if You Have One</p>
@@ -103,8 +103,8 @@
                                 <a href="checkout.html">Proceed to Checkout</a>
                             </div>
                         </div>
-                    </div>
-
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
