@@ -134,33 +134,31 @@
                     <ul class="search-cart-wrapper d-flex">
                         <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
                         <li>
-                            <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
+                            <a href="javascript:void(0);"><i class="flaticon-like"></i>
+                                <span>{{\App\Wishlist::where('ip_address', request()->ip())->count()}}</span></a>
                             <ul class="cart-wrap dropdown_style">
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{ asset('frontend_assets') }}/images/cart/1.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{ asset('frontend_assets') }}/images/cart/3.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                @forelse(\App\Wishlist::where('ip_address', request()->ip())->get() as $wishlist)
+                                    <li class="cart-items">
+                                        <div class="cart-img">
+                                            <img
+                                                src="{{ asset('uploads/product_photos/'.$wishlist->product->product_thumbnail_photo) }}"
+                                                alt="Product Photo" width="80">
+                                        </div>
+                                        <div class="cart-content">
+                                            <a href="{{url('/product/'.$wishlist->product_id)}}">{{$wishlist->product->product_name}}</a>
+
+                                            <p>BDT. {{$wishlist->product->product_price}}</p>
+                                            <a href="{{url('remove/wishlist/'.$wishlist->id)}}"><i
+                                                    class="fa fa-times"></i></a>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <p>No item selected</p>
+                                @endforelse
                                 <li>
-                                    <button>Check Out</button>
+                                    <a href="{{url('wishlist')}}">
+                                        <button>See Favorites</button>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -176,13 +174,16 @@
                                 @forelse(\App\Cart::where('ip_address', request()->ip())->get() as $cart)
                                     <li class="cart-items">
                                         <div class="cart-img">
-                                            <img src="{{ asset('frontend_assets') }}/images/cart/1.jpg" alt="">
+                                            <img
+                                                src="{{ asset('uploads/product_photos/'.$cart->product->product_thumbnail_photo) }}"
+                                                alt="Product Photo" width="80">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="#">{{$cart->product->product_name}}</a>
+                                            <a href="{{url('/product/'.$cart->product_id)}}">{{$cart->product->product_name}}</a>
                                             <span>QTY : {{$cart->quantity}}</span>
                                             <p>BDT. {{$cart->product->product_price*$cart->quantity}}</p>
-                                            <i class="fa fa-times"></i>
+                                            <a href="{{url('remove/cart/'.$cart->id)}}"><i
+                                                    class="fa fa-times"></i></a>
                                             @php
                                                 $sub_total = $sub_total + ($cart->product->product_price*$cart->quantity);
                                             @endphp

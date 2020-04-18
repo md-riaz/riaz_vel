@@ -309,6 +309,13 @@
                                     </a>
                                 </li>
 
+                                <li class="{{Request::is('coupons') ? 'active' : ''}}">
+                                    <a href="{{url('coupons')}}">
+                                        <span class="pcoded-micon"><i class="icofont icofont-ticket"></i></span>
+                                        <span class="pcoded-mtext">Coupon's</span>
+                                    </a>
+                                </li>
+
 
                             </ul>
                         </div>

@@ -30,6 +30,14 @@ Route::get('/blog/{blog}', 'FrontendController@showBlog');
 // Cart
 Route::post('/add/to/cart', 'CartController@CartAdd');
 Route::get('cart', 'CartController@show');
+Route::post('cart/post', 'CartController@update');
+Route::get('remove/cart/{cart}', 'CartController@destroy');
+
+
+// Wishlist
+Route::get('/add/to/wishlist/{id}', 'WishlistController@WishlistAdd');
+Route::get('wishlist', 'WishlistController@show');
+Route::get('remove/wishlist/{wishlist}', 'WishlistController@destroy');
 
 
 // Message control admin
@@ -99,3 +107,8 @@ Route::post('blog/update/', 'BlogController@update');
 Route::get('delete/blog/{blog}', 'BlogController@destroy');
 Route::get('restore/blog/{id}', 'BlogController@restore');
 Route::get('hard-delete/blog/{id}', 'BlogController@harddestroy');
+
+// Coupon
+Route::get('/coupons', 'CouponController@index');
+Route::post('store/coupon', 'CouponController@store');
+Route::get('delete/coupon/{coupon}', 'CouponController@destroy');

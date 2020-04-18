@@ -157,7 +157,17 @@ class ProductController extends Controller
 
     public function harddestroy($id)
     {
+
+        $multiPhoto = ProductMultiplePhoto::where('product_id', $id);
+        if ($multiPhoto->exists()) {
+            foreach ($multiPhoto->get() as $item) {
+                unlink(base_path('public/uploads/product_multiple_photos/' . $item->photo_name));
+                $item->delete();
+            }
+        }
+        unlink(base_path('public/uploads/product_photos/' . Product::onlyTrashed()->find($id)->product_thumbnail_photo));
         Product::onlyTrashed()->findOrFail($id)->forceDelete();
+        ProductMultiplePhoto::where('product_id', $id);
         return back()->with('fdelete', 'Product permanently deleted');
     }
 }

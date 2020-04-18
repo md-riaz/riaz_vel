@@ -4,8 +4,8 @@
         <div class="col-lg-8">
             <div class="page-header-title">
                 <div class="d-inline">
-                    <h4>Testimonial</h4>
-                    <span>all the details about client testimonial is here</span>
+                    <h4>Coupon</h4>
+                    <span>all the details about coupon is here</span>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                         </a>
                     </li>
 
-                    <li class="breadcrumb-item"><a href="#!">Testimonial</a></li>
+                    <li class="breadcrumb-item"><a href="#!">Coupons</a></li>
 
                 </ul>
             </div>
@@ -29,13 +29,13 @@
 @endsection
 
 @section('body')
-    {{-- Add new Testimonial --}}
+    {{-- Add new Coupon --}}
     <div class="row">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h5> Add Testimonial</h5>
-                    <span>add new testimonial here</span>
+                    <h5> Add Coupon</h5>
+                    <span>add new coupon here</span>
 
                 </div>
                 <div class="card-block">
@@ -46,49 +46,41 @@
                             {{session('success_message')}}
                         </div>
                     @endif
-                    <form method="post" action="{{ url('store/testimonial')}}" enctype="multipart/form-data">
+                    <form method="post" action="{{ url('store/coupon')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="name">Client Name</label>
-                            <input required id="name" class="form-control" type="text" name="name">
-                            @error('name')
+                            <label for="coupon_name">Coupon Name</label>
+                            <input required id="coupon_name" class="form-control" type="text" name="coupon_name"
+                                   autocomplete>
+                            @error('coupon_name')
                             <div class="alert alert-warning" role="alert">
                                 {{$message}}
                             </div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="designation">Designation</label>
-                            <input required id="designation" class="form-control" type="text" name="designation">
-                            @error('designation')
+                            <label for="discount_amount">Discount Amount (%)</label>
+                            <input required id="discount_amount" class="form-control" type="number"
+                                   name="discount_amount" autocomplete max="99">
+                            @error('discount_amount')
                             <div class="alert alert-warning" role="alert">
                                 {{$message}}
                             </div>
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="speech">Speech</label>
-                            <input required id="speech" class="form-control" type="text" name="speech">
-                            @error('speech')
-                            <div class="alert alert-warning" role="alert">
-                                {{$message}}
-                            </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="client_photo">Client Image</label>
-                            <input required type="file" class="form-control-file" id="client_photo" name="client_photo">
-                            @error('client_photo')
+                            <label for="validity_till">Validity till</label>
+                            <input required id="validity_till" class="form-control" type="date" name="validity_till"
+                                   min="{{\Carbon\Carbon::now()->format('Y-m-d')}}">
+                            @error('validity_till')
                             <div class="alert alert-warning" role="alert">
                                 {{$message}}
                             </div>
                             @enderror
                         </div>
 
-
                         <div class="form-group">
-                            <button class="btn btn-dark" type="submit">Add Testimonial</button>
+                            <button class="btn btn-dark" type="submit">Add Coupon</button>
                         </div>
                     </form>
                 </div>
@@ -100,21 +92,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5> All Testimonial List </h5>
-                    <span>all testimonial are here</span>
+                    <h5> All Coupon List </h5>
+                    <span>all coupon are here</span>
 
                 </div>
                 <div class="card-block table-border-style">
 
                     {{-- Print success notification from sesson --}}
-                    @if (session('update_status'))
-                        <div class="alert alert-success icons-alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <i class="icofont icofont-close-line-circled"></i>
-                            </button>
-                            <p><strong>Success!</strong> {{session('update_status')}}</p>
-                        </div>
-                    @endif
                     @if (session('delete_status'))
                         <div class="alert alert-success icons-alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -129,37 +113,39 @@
                             <thead>
                             <tr class="border-bottom-danger">
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Designation</th>
-                                <th>Client Photo</th>
-                                <th>Speech</th>
+                                <th>Coupon Name</th>
+                                <th>Discount Amount</th>
+                                <th>Validity</th>
+                                <th>Status</th>
                                 <th>Created at</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse ($testimonials as $testimonial)
+                            @forelse ($coupons as $coupon)
 
                                 <tr class="border-bottom-primary">
                                     <td>{{$loop->index+1}}</td>
-                                    <td>{{$testimonial->name}}</td>
-                                    <td>{{$testimonial->designation}}</td>
-                                    <td><img src="{{asset('uploads/testimonial_photos/'.$testimonial->client_photo)}}"
-                                             alt="Not found" width="100" style="object-fit:cover;">
-                                    </td>
-                                    <td>{{Str::limit($testimonial->speech, 50)}}</td>
+                                    <td>{{$coupon->coupon_name}}</td>
+                                    <td>{{$coupon->discount_amount}}%</td>
+                                    <td>{{$coupon->validity_till}} </td>
                                     <td>
-                                        @if ($testimonial->created_at)
-                                            {{$testimonial->created_at->diffForHumans()}}
+                                        @if($coupon->validity_till >= \Carbon\Carbon::now()->format('Y-m-d'))
+                                            <span class="badge badge-success">valid</span>
+                                        @else
+                                            <span class="badge badge-danger">invalid</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($coupon->created_at)
+                                            {{$coupon->created_at->diffForHumans()}}
                                         @else
                                             <span class="text-danger">No time availabe</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Button group">
-                                            <a href="{{url('update/testimonial/'.$testimonial->id)}}" type="button"
-                                               class="btn btn-info"><i class="icofont icofont-edit"></i></a>
-                                            <a href="{{url('delete/testimonial/'.$testimonial->id)}}" type="button"
+                                            <a href="{{url('delete/coupon/'.$coupon->id)}}" type="button"
                                                class="btn btn-danger"><i class="icofont icofont-ui-delete"></i></a>
                                         </div>
                                     </td>

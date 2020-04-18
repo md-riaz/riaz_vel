@@ -400,8 +400,11 @@
                                     </div>
                                     <div class="col-5 text-right">
                                         <ul>
-                                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
-                                            <li><a href="cart.html"><i class="fa fa-heart"></i></a></li>
+                                            <li>
+                                                <a href="{{url('cart')}}"><i class="fa fa-shopping-cart"></i></a>
+
+                                            </li>
+                                            <li><a href="{{url('wishlist')}}"><i class="fa fa-heart"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>

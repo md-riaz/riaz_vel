@@ -32,4 +32,22 @@ class CartController extends Controller
             'cart' => Cart::where('ip_address', \request()->ip())->get()
         ]);
     }
+
+    public function update()
+    {
+        // Loop through every product as product id and quantity value
+        foreach (\request()->quantity as $product_id => $quantity) {
+            // Select all from cart where ip address is req ip and product id is req product id and update quantity
+            Cart::where('ip_address', \request()->ip())->where('product_id', $product_id)->update([
+                'quantity' => $quantity
+            ]);
+        }
+        return back()->with('status', 'Cart updated');
+    }
+
+    public function destroy(Cart $cart)
+    {
+        $cart->delete();
+        return back()->with('status', 'Item removed');
+    }
 }
