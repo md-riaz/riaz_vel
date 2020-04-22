@@ -23,7 +23,7 @@ class CartController extends Controller
                 'ip_address' => $ip_add,
             ]);
         }
-        return back();
+        return back()->with('cart_added', 'Added to cart');
     }
 
     public function show()

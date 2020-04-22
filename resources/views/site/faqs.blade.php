@@ -3,23 +3,7 @@
     All FAQ Answers
 @endsection
 @section('content')
-    <!-- .breadcumb-area start -->
-    <div class="breadcumb-area bg-img-4 ptb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcumb-wrap text-center">
-                        <h2>Frequently Asked Questions (FAQ)</h2>
-                        <ul>
-                            <li><a href="{{url('/')}}">Home</a></li>
-                            <li><span>FAQ</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- .breadcumb-area end -->
+    <x-breadcump title="Frequently Asked Questions (FAQ)" info="FAQ"/>
     <!-- faq-area start -->
     <div class="faq-area ptb-100">
         <div class="container">

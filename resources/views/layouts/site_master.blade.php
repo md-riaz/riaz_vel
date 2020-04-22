@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -71,7 +72,7 @@
                                     class="fa fa-angle-down"></i></a>
                             <ul class="dropdown_style">
                                 <li><a href="{{url('/login')}}">Login</a></li>
-                                <li><a href="{{url('/register')}}">Register</a></li>
+                                <li><a href="{{url('customer/register')}}">Register</a></li>
                                 <li><a href="cart.html">Cart</a></li>
                                 <li><a href="checkout.html">Checkout</a></li>
                                 <li><a href="wishlist.html">wishlist</a></li>
@@ -81,9 +82,9 @@
                         <li>
                             @if (Route::has('login'))
                                 @auth
-                                    <a href="{{route('home')}}"> Dashboard </a>
+                                    <a href=""> Dashboard </a>
                                 @else
-                                    <a href="{{route('home')}}">Login/Register </a>
+                                    <a href="{{url('customer/register')}}">Login/Register </a>
                                 @endauth
                             @endif
 
@@ -108,7 +109,8 @@
                     <nav class="mainmenu">
                         <ul class="d-flex">
                             <li class="{{Request::path() === '/' ? 'active' : ''}}"><a href="{{'/'}}">Home</a></li>
-                            <li class="{{Request::path() === 'about' ? 'active' : ''}}"><a href="{{route('about')}}">About</a>
+                            <li class="{{Request::path() === 'about' ? 'active' : ''}}"><a
+                                    href="{{route('about')}}">About</a>
                             </li>
                             <li>
                                 <a href="{{url('shop')}}">Shop Page</a>
@@ -132,7 +134,8 @@
                 </div>
                 <div class="col-md-4 col-lg-2 col-sm-5 col-4">
                     <ul class="search-cart-wrapper d-flex">
-                        <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
+                        <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a>
+                        </li>
                         <li>
                             <a href="javascript:void(0);"><i class="flaticon-like"></i>
                                 <span>{{\App\Wishlist::where('ip_address', request()->ip())->count()}}</span></a>
@@ -145,7 +148,8 @@
                                                 alt="Product Photo" width="80">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="{{url('/product/'.$wishlist->product_id)}}">{{$wishlist->product->product_name}}</a>
+                                            <a
+                                                href="{{url('/product/'.$wishlist->product_id)}}">{{$wishlist->product->product_name}}</a>
 
                                             <p>BDT. {{$wishlist->product->product_price}}</p>
                                             <a href="{{url('remove/wishlist/'.$wishlist->id)}}"><i
@@ -168,8 +172,8 @@
                             @endphp
                             <a href="javascript:void(0);"><i class="flaticon-shop"></i>
                                 <span>
-                                   {{\App\Cart::where('ip_address', request()->ip())->count()}}
-                                </span></a>
+                                        {{\App\Cart::where('ip_address', request()->ip())->count()}}
+                                    </span></a>
                             <ul class="cart-wrap dropdown_style">
                                 @forelse(\App\Cart::where('ip_address', request()->ip())->get() as $cart)
                                     <li class="cart-items">
@@ -179,11 +183,11 @@
                                                 alt="Product Photo" width="80">
                                         </div>
                                         <div class="cart-content">
-                                            <a href="{{url('/product/'.$cart->product_id)}}">{{$cart->product->product_name}}</a>
+                                            <a
+                                                href="{{url('/product/'.$cart->product_id)}}">{{$cart->product->product_name}}</a>
                                             <span>QTY : {{$cart->quantity}}</span>
                                             <p>BDT. {{$cart->product->product_price*$cart->quantity}}</p>
-                                            <a href="{{url('remove/cart/'.$cart->id)}}"><i
-                                                    class="fa fa-times"></i></a>
+                                            <a href="{{url('remove/cart/'.$cart->id)}}"><i class="fa fa-times"></i></a>
                                             @php
                                                 $sub_total = $sub_total + ($cart->product->product_price*$cart->quantity);
                                             @endphp
@@ -318,7 +322,8 @@
                 </div>
                 <div class="col-lg-4 col-md-8 col-sm-12">
                     <div class="footer-content">
-                        <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled
+                        <p>On the other hand, we denounce with righteous indignation and dislike men who are so
+                            beguiled
                             and demoralized by the charms of pleasure righteous indignation and dislike</p>
                     </div>
                 </div>
@@ -367,7 +372,8 @@
                             <li>(05 Customar Review)</li>
                         </ul>
                     </div>
-                    <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and
+                    <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled
+                        and
                         demoralized by the charms of pleasure of the moment, so blinded by desire denounce with
                         righteous indignation</p>
                     <ul class="input-style">
@@ -421,8 +427,18 @@
 <script src="{{ asset('frontend_assets') }}/js/jquery-ui.min.js"></script>
 <!-- main js -->
 <script src="{{ asset('frontend_assets') }}/js/scripts.js"></script>
+<script>
+    // When the btn clicked get the input value and concatinate with url and go
+    $(function () {
+        $('#applyCoupon').click(function (e) {
+            let url = "{{url('cart')}}/" + $('#couponinput').val();
+            window.location = url;
+        });
+    });
+</script>
 </body>
 
 
 <!-- Mirrored from themepresss.com/tf/html/tohoney/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Mar 2020 03:33:34 GMT -->
+
 </html>

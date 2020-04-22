@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Banner;
 use App\Blog;
+use App\Cart;
 use App\Category;
+use App\Coupon;
 use App\Faq;
 use App\Message;
 use App\Product;
 use App\ProductMultiplePhoto;
 use App\Testimonial;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
@@ -94,5 +95,21 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function checkCoupon($coupon_name = '')
+    {
+        $coupon = Coupon::where('coupon_name', $coupon_name);
+        if ($coupon->exists()) {
+            $coupon = $coupon->first();
+            if ($coupon->validity_till >= Carbon::now()->format('Y-m-d')) {
+                return view('site.cart', [
+                    'cart' => Cart::where('ip_address', \request()->ip())->get(),
+                    'discount' => $coupon->discount_amount,
+                    'coupon_name' => $coupon->coupon_name
+                ]);
+            } else {
+                return back()->with('invalid', 'Invalid Coupon');
+            }
+        }
 
+    }
 }

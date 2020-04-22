@@ -4,24 +4,7 @@
 @endsection
 
 @section('content')
-    <!-- header-area end -->
-    <!-- .breadcumb-area start -->
-    <div class="breadcumb-area bg-img-4 ptb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcumb-wrap text-center">
-                        <h2>Wishlist</h2>
-                        <ul>
-                            <li><a href="{{url('/')}}">Home</a></li>
-                            <li><span>Wishlist</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- .breadcumb-area end -->
+    <x-breadcump title="Wishlist" info="wishlist"/>
     <!-- cart-area start -->
     <div class="cart-area ptb-100">
         <div class="container">

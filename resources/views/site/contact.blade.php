@@ -4,23 +4,7 @@
 @endsection
 
 @section('content')
-    <!-- .breadcumb-area start -->
-    <div class="breadcumb-area bg-img-4 ptb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcumb-wrap text-center">
-                        <h2>Contact Us</h2>
-                        <ul>
-                            <li><a href="{{url('/')}}">Home</a></li>
-                            <li><span>Contact</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- .breadcumb-area end -->
+    <x-breadcump title="Contact us" info="contact"/>
     <!-- contact-area start -->
     <div class="google-map">
         <div class="contact-map">
