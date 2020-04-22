@@ -39,6 +39,15 @@ Route::get('/add/to/wishlist/{id}', 'WishlistController@WishlistAdd');
 Route::get('wishlist', 'WishlistController@show');
 Route::get('remove/wishlist/{wishlist}', 'WishlistController@destroy');
 
+// Coupon discount
+Route::get('/cart/{coupon_name}', 'FrontendController@checkCoupon');
+
+// Coupon discount
+Route::get('/checkout', 'CheckoutController@index');
+
+// Customer Registration
+Route::get('customer/register', 'Customer_regController@index');
+Route::post('customer/register', 'Customer_regController@store');
 
 // Message control admin
 Route::get('/messages', 'MessageController@index')->name('messages');

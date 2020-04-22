@@ -3,23 +3,7 @@
     Blog
 @endsection
 @section('content')
-    <!-- .breadcumb-area start -->
-    <div class="breadcumb-area bg-img-4 ptb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="breadcumb-wrap text-center">
-                        <h2>Blog Page</h2>
-                        <ul>
-                            <li><a href="{{url('/')}}">Home</a></li>
-                            <li><span>Blog</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- .breadcumb-area end -->
+    <x-breadcump title="Blog page" info="blog"/>
     <!-- blog-area start -->
     <div class="blog-area">
         <div class="container">
