@@ -110,6 +110,6 @@ class FrontendController extends Controller
                 return back()->with('invalid', 'Invalid Coupon');
             }
         }
-
+        return back()->with('invalid', 'Invalid Coupon');
     }
 }

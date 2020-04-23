@@ -42,8 +42,14 @@ Route::get('remove/wishlist/{wishlist}', 'WishlistController@destroy');
 // Coupon discount
 Route::get('/cart/{coupon_name}', 'FrontendController@checkCoupon');
 
-// Coupon discount
-Route::get('/checkout', 'CheckoutController@index');
+// Checkout Routes
+Route::post('/checkout', 'CheckoutController@index');
+Route::post('/checkout/post', 'CheckoutController@orders');
+
+// Stripe online payment gateway
+Route::get('stripe', 'StripePaymentController@stripe');
+Route::post('stripe', 'StripePaymentController@stripePost')->name('stripe.post');
+
 
 // Customer Registration
 Route::get('customer/register', 'Customer_regController@index');
