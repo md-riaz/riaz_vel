@@ -90,16 +90,22 @@
 
                             <div class='form-row row'>
                                 <div class='col-md-12 error form-group hide'>
+                                    <!-- loop through all items and create hidden input field -->
+                                    @foreach($req_all_data as $key => $value)
+                                        <input type="hidden" name="{{$key}}" value="{{$value}}">
+                                    @endforeach
+
                                     <div class='alert-danger alert'>Please correct the errors and try
-                                        again.</div>
+                                        again.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <input type="hidden" name="total" value="{{session('total')}}">
                                     <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now
-                                        (BDT. {{session('total')}})</button>
+                                        (BDT. {{$req_all_data['total']}})
+                                    </button>
                                 </div>
                             </div>
 
