@@ -82,6 +82,9 @@
     </div>
 </div>
 <!-- search-form here -->
+@php
+    $address = App\Address::find(1)->first();
+@endphp
 <!-- header-area start -->
 <header class="header-area">
     <div class="header-top bg-2">
@@ -89,8 +92,8 @@
             <div class="row">
                 <div class="col-md-6 col-12">
                     <ul class="d-flex header-contact">
-                        <li><i class="fa fa-phone"></i> {{App\Address::find(1)->first()->phone_number}}</li>
-                        <li><i class="fa fa-envelope"></i>{{App\Address::find(1)->first()->email}}</li>
+                        <li><i class="fa fa-phone"></i> {{$address->phone_number}}</li>
+                        <li><i class="fa fa-envelope"></i>{{$address->email}}</li>
                     </ul>
                 </div>
                 <div class="col-md-6 col-12">
@@ -158,10 +161,13 @@
                         <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a>
                         </li>
                         <li>
+                            @php
+                                $wishlist = \App\Wishlist::where('ip_address', request()->ip());
+                            @endphp
                             <a href="javascript:void(0);"><i class="flaticon-like"></i>
-                                <span>{{\App\Wishlist::where('ip_address', request()->ip())->count()}}</span></a>
+                                <span>{{$wishlist->count()}}</span></a>
                             <ul class="cart-wrap dropdown_style">
-                                @forelse(\App\Wishlist::where('ip_address', request()->ip())->get() as $wishlist)
+                                @forelse($wishlist->get() as $wishlist)
                                     <li class="cart-items">
                                         <div class="cart-img">
                                             <img
@@ -190,13 +196,14 @@
                         <li>
                             @php
                                 $sub_total = 0;
+                                $cart = \App\Cart::where('ip_address', request()->ip());
                             @endphp
                             <a href="javascript:void(0);"><i class="flaticon-shop"></i>
                                 <span>
-                                        {{\App\Cart::where('ip_address', request()->ip())->count()}}
+                                        {{$cart->count()}}
                                     </span></a>
                             <ul class="cart-wrap dropdown_style">
-                                @forelse(\App\Cart::where('ip_address', request()->ip())->get() as $cart)
+                                @forelse($cart->get() as $cart)
                                     <li class="cart-items">
                                         <div class="cart-img">
                                             <img
@@ -332,9 +339,9 @@
                 <div class="col-lg-3 col-md-8 col-sm-12">
                     <div class="footer-adress">
                         <ul>
-                            <li><a href="#"><span>Email:</span> {{App\Address::find(1)->first()->email}}</a></li>
-                            <li><a href="#"><span>Tel:</span> {{App\Address::find(1)->first()->phone_number}}</a></li>
-                            <li><a href="#"><span>Adress:</span>{{App\Address::find(1)->first()->address}}</a></li>
+                            <li><a href="#"><span>Email:</span> {{$address->email}}</a></li>
+                            <li><a href="#"><span>Tel:</span> {{$address->phone_number}}</a></li>
+                            <li><a href="#"><span>Adress:</span>{{$address->address}}</a></li>
                         </ul>
                     </div>
                 </div>
