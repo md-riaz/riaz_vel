@@ -322,10 +322,10 @@
                 <div class="col-lg-2 col-md-3 col-sm-12">
                     <div class="footer-icon">
                         <ul class="d-flex">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="{{$address->facebook_url}}"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="{{$address->twitter_url}}"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="{{$address->linkedin_url}}"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="{{$address->gplus_url}}"><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -406,11 +406,11 @@
                         </ul>
                         <ul class="socil-icon">
                             <li>Share :</li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="{{$address->facebook_url}}"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="{{$address->twitter_url}}"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="{{$address->linkedin_url}}"><i class="fa fa-linkedin"></i></a></li>
                             <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="{{$address->gplus_url}}"><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </div>
                 </div>
