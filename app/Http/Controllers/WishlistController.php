@@ -9,11 +9,20 @@ class WishlistController extends Controller
 {
     public function WishlistAdd($id)
     {
-        Wishlist::create([
-            'product_id' => $id,
-            'ip_address' => request()->ip()
-        ]);
-        return back();
+        $ip_add = request()->ip();
+        $selected_column = Wishlist::where('product_id', $id)->where('ip_address', $ip_add);
+
+        if ($selected_column->exists()) {
+            return back()->with('success', 'Already in wishlist');
+        } else {
+            Wishlist::create([
+                'product_id' => $id,
+                'ip_address' => request()->ip()
+            ]);
+            return back()->with('success', 'Added to wishlist');
+        }
+
+
     }
 
     public function show()

@@ -3,16 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Banner;
+use App\Best_seller;
 use App\Blog;
 use App\Cart;
 use App\Category;
 use App\Coupon;
 use App\Faq;
 use App\Message;
+use App\Order_list;
 use App\Product;
 use App\ProductMultiplePhoto;
 use App\Testimonial;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
@@ -23,6 +26,7 @@ class FrontendController extends Controller
             'banners' => Banner::all(),
             'products' => Product::all(),
             'testimonials' => Testimonial::all(),
+            'best_seller' => Best_seller::orderby('ordered', 'desc')->take(4)->get()
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -12,18 +13,22 @@ class CartController extends Controller
         $product_id = request()->product_id;
         $ip_add = request()->ip();
         $selected_column = Cart::where('product_id', $product_id)->where('ip_address', $ip_add);
-
-        if ($selected_column->exists()) {
-            $selected_column->increment('quantity', request()->quantity);
+        if (Product::where('id', $product_id)->first()->product_quantity < request()->quantity) {
+            return back()->with('status_error', 'You cannot add more than available quantity');
         } else {
-            // Insert id, quantity and ip address to database
-            Cart::create([
-                'product_id' => $product_id,
-                'quantity' => request()->quantity,
-                'ip_address' => $ip_add,
-            ]);
+            if ($selected_column->exists()) {
+                $selected_column->increment('quantity', request()->quantity);
+            } else {
+                // Insert id, quantity and ip address to database
+                Cart::create([
+                    'product_id' => $product_id,
+                    'quantity' => request()->quantity,
+                    'ip_address' => $ip_add,
+                ]);
+                return back()->with('cart_added', 'Added to cart');
+            }
         }
-        return back()->with('cart_added', 'Added to cart');
+
     }
 
     public function show()

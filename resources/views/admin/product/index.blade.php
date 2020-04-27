@@ -59,21 +59,26 @@
                     </div>
                     <div class="form-group">
                         <label>Select a category</label>
-                        <select name="category_id" class="form-control form-control-primary">
+                        <select name="category_id" class="form-control form-control-primary" required>
                             <option value="opt1" disabled selected>Select One Value Only</option>
                             @forelse($categories as $category)
-                            <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                <option value="{{$category->id}}">{{$category->category_name}}</option>
                             @empty
-                            <p class="text-danger">No categories available</p>
+                                <p class="text-danger">No categories available</p>
                             @endforelse
                         </select>
+                        @error('category_id')
+                        <div class="alert alert-warning" role="alert">
+                            {{$message}}
+                        </div>
+                        @enderror
                     </div>
 
 
                     <div class="form-group">
                         <label for="product_price">Product Price</label>
                         <input required id="product_price" class="form-control" type="number" step="0.01"
-                            name="product_price">
+                               name="product_price">
                         @error('product_price')
                         <div class="alert alert-warning" role="alert">
                             {{$message}}

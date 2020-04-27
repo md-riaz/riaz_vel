@@ -50,7 +50,8 @@ Checkout
                             <div class="col-12">
                                 <p>Order Notes </p>
                                 <textarea name="notes"
-                                    placeholder="Notes about Your Order, e.g.Special Note for Delivery"></textarea>
+                                          placeholder="Notes about Your Order, e.g.Special Note for Delivery"
+                                          required></textarea>
                             </div>
                         </div>
 

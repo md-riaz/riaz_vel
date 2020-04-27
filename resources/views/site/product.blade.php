@@ -51,36 +51,45 @@
                                 <li>(05 Customar Review)</li>
                             </ul>
                         </div>
+                        <p>Available Quantity: {{$product->product_quantity}} piece</p>
+
                         <p>{!! nl2br(e($product->product_short_description)) !!}</p>
                         <ul class="input-style">
-                            <form action="{{url('/add/to/cart')}}" method="post">
-                                @csrf
-                                <input type="hidden" value="{{$product->id}}" name="product_id"/>
-                                <li class="quantity cart-plus-minus">
-                                    <input type="text" value="1" name="quantity"/>
-                                </li>
-                                <li>
-
-                                    <button type="submit" class="btn-cart">Add to Cart</button>
-
-                                    <style>
-                                        .btn-cart {
-                                            height: 35px;
-                                            line-height: 35px;
-                                            text-align: center;
-                                            width: 120px;
-                                            background: #ef4836;
-                                            color: #fff !important;
-                                            display: block;
-                                            margin-left: 30px;
-                                            cursor: pointer;
-                                            border: none;
-                                        }
-                                    </style>
-                                </li>
-                            </form>
                             @if(session('cart_added'))
                                 <li class="alert alert-success">{{session('cart_added')}}</li>
+                            @endif
+                            @if(session('status_error'))
+                                <div class="alert alert-danger"> {{session('status_error')}}</div>
+                            @endif
+                            @if($product->product_quantity == 0)
+                                <div class="alert alert-danger">Product is out of stock</div>
+                            @else
+                                <form action="{{url('/add/to/cart')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" value="{{$product->id}}" name="product_id"/>
+                                    <li class="quantity cart-plus-minus">
+                                        <input type="text" value="1" name="quantity"/>
+                                    </li>
+                                    <li>
+
+                                        <button type="submit" class="btn-cart">Add to Cart</button>
+
+                                        <style>
+                                            .btn-cart {
+                                                height: 35px;
+                                                line-height: 35px;
+                                                text-align: center;
+                                                width: 120px;
+                                                background: #ef4836;
+                                                color: #fff !important;
+                                                display: block;
+                                                margin-left: 30px;
+                                                cursor: pointer;
+                                                border: none;
+                                            }
+                                        </style>
+                                    </li>
+                                </form>
                             @endif
                         </ul>
                         <ul class="cetagory">

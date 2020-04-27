@@ -475,7 +475,9 @@ class ComposerStaticInit8227e46c2638f7ddcbab21c72f12776c
     );
 
     public static $classMap = array (
+        'App\\Address' => __DIR__ . '/../..' . '/app/Address.php',
         'App\\Banner' => __DIR__ . '/../..' . '/app/Banner.php',
+        'App\\Best_seller' => __DIR__ . '/../..' . '/app/Best_seller.php',
         'App\\Blog' => __DIR__ . '/../..' . '/app/Blog.php',
         'App\\Cart' => __DIR__ . '/../..' . '/app/Cart.php',
         'App\\Category' => __DIR__ . '/../..' . '/app/Category.php',
@@ -503,6 +505,7 @@ class ComposerStaticInit8227e46c2638f7ddcbab21c72f12776c
         'App\\Http\\Controllers\\MessageController' => __DIR__ . '/../..' . '/app/Http/Controllers/MessageController.php',
         'App\\Http\\Controllers\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProductController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
+        'App\\Http\\Controllers\\StripePaymentController' => __DIR__ . '/../..' . '/app/Http/Controllers/StripePaymentController.php',
         'App\\Http\\Controllers\\TestimonialController' => __DIR__ . '/../..' . '/app/Http/Controllers/TestimonialController.php',
         'App\\Http\\Controllers\\WishlistController' => __DIR__ . '/../..' . '/app/Http/Controllers/WishlistController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

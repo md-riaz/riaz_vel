@@ -315,6 +315,12 @@
                                         <span class="pcoded-mtext">Coupon's</span>
                                     </a>
                                 </li>
+                                <li class="{{Request::is('address') ? 'active' : ''}}">
+                                    <a href="{{route('address')}}">
+                                        <span class="pcoded-micon"><i class="icofont icofont-location-pin"></i></span>
+                                        <span class="pcoded-mtext">Address</span>
+                                    </a>
+                                </li>
 
 
                             </ul>

@@ -6,7 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Address' => $baseDir . '/app/Address.php',
     'App\\Banner' => $baseDir . '/app/Banner.php',
+    'App\\Best_seller' => $baseDir . '/app/Best_seller.php',
     'App\\Blog' => $baseDir . '/app/Blog.php',
     'App\\Cart' => $baseDir . '/app/Cart.php',
     'App\\Category' => $baseDir . '/app/Category.php',
@@ -34,6 +36,7 @@ return array(
     'App\\Http\\Controllers\\MessageController' => $baseDir . '/app/Http/Controllers/MessageController.php',
     'App\\Http\\Controllers\\ProductController' => $baseDir . '/app/Http/Controllers/ProductController.php',
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
+    'App\\Http\\Controllers\\StripePaymentController' => $baseDir . '/app/Http/Controllers/StripePaymentController.php',
     'App\\Http\\Controllers\\TestimonialController' => $baseDir . '/app/Http/Controllers/TestimonialController.php',
     'App\\Http\\Controllers\\WishlistController' => $baseDir . '/app/Http/Controllers/WishlistController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',

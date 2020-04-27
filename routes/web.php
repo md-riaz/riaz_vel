@@ -127,3 +127,7 @@ Route::get('hard-delete/blog/{id}', 'BlogController@harddestroy');
 Route::get('/coupons', 'CouponController@index');
 Route::post('store/coupon', 'CouponController@store');
 Route::get('delete/coupon/{coupon}', 'CouponController@destroy');
+
+// Address
+Route::get('address', 'AddressController@index')->name('address');
+Route::post('update/address', 'AddressController@update');

@@ -30,9 +30,37 @@
     <link rel="stylesheet" href="{{ asset('frontend_assets') }}/css/responsive.css">
     <!-- modernizr css -->
     <script src="{{ asset('frontend_assets') }}/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <style>
+        button.btn-cart {
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            width: 120px;
+            background: #ef4836;
+            color: #fff !important;
+            display: block;
+            margin-left: 30px;
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+            position: initial;
+        }
+    </style>
 </head>
 
 <body>
+<!-- Alert message on payment successful -->
+@if (session('success'))
+    <div id="success-alert">
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert">
+            <strong>Success!</strong> {{session('success')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+@endif
 <!--Start Preloader-->
 <div class="preloader-wrap">
     <div class="spinner"></div>
@@ -61,8 +89,8 @@
             <div class="row">
                 <div class="col-md-6 col-12">
                     <ul class="d-flex header-contact">
-                        <li><i class="fa fa-phone"></i> +01 123 456 789</li>
-                        <li><i class="fa fa-envelope"></i> youremail@gmail.com</li>
+                        <li><i class="fa fa-phone"></i> {{App\Address::find(1)->first()->phone_number}}</li>
+                        <li><i class="fa fa-envelope"></i>{{App\Address::find(1)->first()->email}}</li>
                     </ul>
                 </div>
                 <div class="col-md-6 col-12">
@@ -73,16 +101,15 @@
                             <ul class="dropdown_style">
                                 <li><a href="{{url('/login')}}">Login</a></li>
                                 <li><a href="{{url('customer/register')}}">Register</a></li>
-                                <li><a href="cart.html">Cart</a></li>
-                                <li><a href="checkout.html">Checkout</a></li>
-                                <li><a href="wishlist.html">wishlist</a></li>
+                                <li><a href="{{url('cart')}}">Cart</a></li>
+                                <li><a href="{{url('wishlist')}}">wishlist</a></li>
                             </ul>
                         </li>
 
                         <li>
                             @if (Route::has('login'))
                                 @auth
-                                    <a href=""> Dashboard </a>
+                                    <a href="#"> Dashboard </a>
                                 @else
                                     <a href="{{url('customer/register')}}">Login/Register </a>
                                 @endauth
@@ -116,13 +143,7 @@
                                 <a href="{{url('shop')}}">Shop Page</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);">Pages <i class="fa fa-angle-down"></i></a>
-                                <ul class="dropdown_style">
-                                    <li><a href="cart.html">Shopping cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="{{url('faqs')}}">FAQ</a></li>
-                                </ul>
+                                <a href="{{url('faqs')}}">FAQ</a>
                             </li>
                             <li>
                                 <a href="{{url('blogs')}}">Blog </a>
@@ -223,37 +244,18 @@
                 <div class="row">
                     <div class="col-12 d-block d-lg-none">
                         <ul class="metismenu">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About</a></li>
+                            <li><a href="{{'/'}}">Home</a></li>
+                            <li><a href="{{route('about')}}">About</a></li>
                             <li class="sidemenu-items">
-                                <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Shop </a>
-                                <ul aria-expanded="false">
-                                    <li><a href="shop.html">Shop Page</a></li>
-                                    <li><a href="single-product.html">Product Details</a></li>
-                                    <li><a href="cart.html">Shopping cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                </ul>
+                                <a href="{{url('shop')}}">Shop Page</a>
                             </li>
                             <li class="sidemenu-items">
-                                <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Pages </a>
-                                <ul aria-expanded="false">
-                                    <li><a href="about.html">About Page</a></li>
-                                    <li><a href="single-product.html">Product Details</a></li>
-                                    <li><a href="cart.html">Shopping cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                </ul>
+                                <a href="{{url('faqs')}}">FAQ</a>
                             </li>
                             <li class="sidemenu-items">
-                                <a class="has-arrow" aria-expanded="false" href="javascript:void(0);">Blog</a>
-                                <ul aria-expanded="false">
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
+                                <a href="{{url('blogs')}}">Blog </a>
                             </li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{{route('contact')}}">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -330,9 +332,9 @@
                 <div class="col-lg-3 col-md-8 col-sm-12">
                     <div class="footer-adress">
                         <ul>
-                            <li><a href="#"><span>Email:</span> domain@gmail.com</a></li>
-                            <li><a href="#"><span>Tel:</span> 0131234567</a></li>
-                            <li><a href="#"><span>Adress:</span> 52 Web Bangale , Adress line2 , ip:3105</a></li>
+                            <li><a href="#"><span>Email:</span> {{App\Address::find(1)->first()->email}}</a></li>
+                            <li><a href="#"><span>Tel:</span> {{App\Address::find(1)->first()->phone_number}}</a></li>
+                            <li><a href="#"><span>Adress:</span>{{App\Address::find(1)->first()->address}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -348,59 +350,72 @@
     </div>
 </div>
 <!-- .footer-area end -->
-<!-- Modal area start -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="modal-body d-flex">
-                <div class="product-single-img w-50">
-                    <img src="{{ asset('frontend_assets') }}/images/product/product-details.jpg" alt="">
-                </div>
-                <div class="product-single-content w-50">
-                    <h3>Pure Nature Hohey</h3>
-                    <div class="rating-wrap fix">
-                        <span class="pull-left">$219.56</span>
-                        <ul class="rating pull-right">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li>(05 Customar Review)</li>
+@forelse(\App\Product::all() as $product)
+    <!-- Modal area start -->
+    <div class="modal fade" id="product_id_{{$product->id}}" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body d-flex">
+                    <div class="product-single-img w-50">
+                        <img src="{{ asset('uploads/product_photos/'.$product->product_thumbnail_photo) }}" alt="">
+                    </div>
+                    <div class="product-single-content w-50">
+                        <h3>{{$product->product_name}}</h3>
+                        <div class="rating-wrap fix">
+                            <span class="pull-left">BDT. {{$product->product_price}}</span>
+                            <ul class="rating pull-right">
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li>(05 Customar Review)</li>
+                            </ul>
+                        </div>
+                        <p>{{$product->product_short_description}}/p>
+                        <ul class="input-style">
+
+                            @if($product->product_quantity == 0)
+                                <div class="alert alert-danger">Product is out of stock</div>
+                            @else
+                                <form action="{{url('/add/to/cart')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" value="{{$product->id}}" name="product_id"/>
+                                    <li class="quantity cart-plus-minus">
+                                        <input type="text" value="1" name="quantity"/>
+                                    </li>
+                                    <li>
+                                        <button type="submit" class="btn-cart">Add to Cart</button>
+                                    </li>
+                                </form>
+                            @endif
+                        </ul>
+                        <ul class="cetagory">
+                            <li>Categories:</li>
+                            <li><a href="#">{{$product->relationtocategory->category_name}}</a></li>
+                        </ul>
+                        <ul class="socil-icon">
+                            <li>Share :</li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </div>
-                    <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled
-                        and
-                        demoralized by the charms of pleasure of the moment, so blinded by desire denounce with
-                        righteous indignation</p>
-                    <ul class="input-style">
-                        <li class="quantity cart-plus-minus">
-                            <input type="text" value="1"/>
-                        </li>
-                        <li><a href="cart.html">Add to Cart</a></li>
-                    </ul>
-                    <ul class="cetagory">
-                        <li>Categories:</li>
-                        <li><a href="#">Honey,</a></li>
-                        <li><a href="#">Olive Oil</a></li>
-                    </ul>
-                    <ul class="socil-icon">
-                        <li>Share :</li>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Modal area start -->
+    <!-- Modal area end -->
+@empty
+
+@endforelse
+
+
 <!-- jquery latest version -->
 <script src="{{ asset('frontend_assets') }}/js/vendor/jquery-2.2.4.min.js"></script>
 <!-- bootstrap js -->
@@ -433,6 +448,10 @@
         $('#applyCoupon').click(function (e) {
             let url = "{{url('cart')}}/" + $('#couponinput').val();
             window.location = url;
+        });
+        // remove alert after showing 5 sec
+        $("#success-alert").fadeTo(5000, 500).slideUp(500, function () {
+            $("#alert").slideUp(500);
         });
     });
 </script>

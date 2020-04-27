@@ -10,8 +10,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    @if(session('status'))
-                        <div class="alert alert-success"> {{session('status')}}</div>
+                    @if(session('cart_added'))
+                        <div class="alert alert-success"> {{session('cart_added')}}</div>
                     @endif
                     <form action="{{url('add/to/cart')}}" method="post">
                         @csrf
@@ -39,7 +39,11 @@
                                     </td>
                                     <td class="ptice">BDT. {{$item->product->product_price}}</td>
                                     <td class="stock ">
-                                        No idea
+                                        @if($item->product->product_quantity > 0)
+                                            <span class="badge badge-success text-white">In Stock</span>
+                                        @else
+                                            <span class="badge badge-dark text-white">Out of Stock</span>
+                                        @endif
                                     </td>
                                     <td class="addcart">
                                         <form action="{{url('/add/to/cart')}}" method="post">

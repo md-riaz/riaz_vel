@@ -92,118 +92,42 @@
                 </div>
             </div>
             <ul class="row">
-                <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                    <div class="product-wrap">
-                        <div class="product-img">
-                            <img src="{{ asset('frontend_assets') }}/images/product/1.jpg" alt="">
-                            <div class="product-icon flex-style">
-                                <ul>
-                                    <li><a data-toggle="modal" data-target="#exampleModalCenter"
-                                           href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="{{url('wishlist')}}"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="{{url('cart')}}"><i class="fa fa-shopping-bag"></i></a></li>
+                @forelse($best_seller as $best_sell)
+                    <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
+                        <div class="product-wrap">
+                            <div class="product-img">
+                                <img
+                                    src="{{ asset('uploads/product_photos/'.$best_sell->product->product_thumbnail_photo) }}"
+                                    alt="">
+                                <div class="product-icon flex-style">
+                                    <ul>
+                                        <li><a data-toggle="modal" data-target="#product_id_{{$best_sell->product->id}}"
+                                               href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
+                                        <li><a href="{{url('add/to/wishlist/'.$best_sell->product->id)}}"><i
+                                                    class="fa fa-heart"></i></a></li>
+                                        <li><a href="{{url('cart')}}"><i class="fa fa-shopping-bag"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <h3>
+                                    <a href="{{url('product/'.$best_sell->product->id)}}">{{$best_sell->product->product_name}}</a>
+                                </h3>
+                                <p class="pull-left">BDT. {{$best_sell->product->product_price}}
+
+                                </p>
+                                <ul class="pull-right d-flex">
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star-half-o"></i></li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="product-content">
-                            <h3><a href="single-product.html">Nature Honey</a></h3>
-                            <p class="pull-left">$125
-
-                            </p>
-                            <ul class="pull-right d-flex">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star-half-o"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                    <div class="product-wrap">
-                        <div class="product-img">
-                            <img src="{{ asset('frontend_assets') }}/images/product/2.jpg" alt="">
-                            <div class="product-icon flex-style">
-                                <ul>
-                                    <li><a data-toggle="modal" data-target="#exampleModalCenter"
-                                           href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="{{url('wishlist')}}"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="{{url('cart')}}"><i class="fa fa-shopping-bag"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a href="single-product.html">Olive Oil</a></h3>
-                            <p class="pull-left">$125
-
-                            </p>
-                            <ul class="pull-right d-flex">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star-half-o"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                    <div class="product-wrap">
-                        <div class="product-img">
-                            <img src="{{ asset('frontend_assets') }}/images/product/3.jpg" alt="">
-                            <div class="product-icon flex-style">
-                                <ul>
-                                    <li><a data-toggle="modal" data-target="#exampleModalCenter"
-                                           href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="{{url('wishlist')}}"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="{{url('cart')}}"><i class="fa fa-shopping-bag"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a href="single-product.html">Olive Oil</a></h3>
-                            <p class="pull-left">$125
-
-                            </p>
-                            <ul class="pull-right d-flex">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star-half-o"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-                <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-                    <div class="product-wrap">
-                        <div class="product-img">
-                            <img src="{{ asset('frontend_assets') }}/images/product/4.jpg" alt="">
-                            <div class="product-icon flex-style">
-                                <ul>
-                                    <li><a data-toggle="modal" data-target="#exampleModalCenter"
-                                           href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                    <li><a href="{{url('wishlist')}}"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="{{url('cart')}}"><i class="fa fa-shopping-bag"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h3><a href="single-product.html">Coconut Oil</a></h3>
-                            <p class="pull-left">$125
-
-                            </p>
-                            <ul class="pull-right d-flex">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star-half-o"></i></li>
-                            </ul>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                @empty
+                @endforelse
             </ul>
         </div>
     </div>
@@ -229,9 +153,10 @@
                                      alt="">
                                 <div class="product-icon flex-style">
                                     <ul>
-                                        <li><a data-toggle="modal" data-target="#exampleModalCenter"
+                                        <li><a data-toggle="modal" data-target="#product_id_{{$product->id}}"
                                                href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                        <li><a href="{{url('wishlist')}}"><i class="fa fa-heart"></i></a></li>
+                                        <li><a href="{{url('add/to/wishlist/'.$product->id)}}"><i
+                                                    class="fa fa-heart"></i></a></li>
                                         <li><a href="{{url('cart')}}"><i class="fa fa-shopping-bag"></i></a></li>
                                     </ul>
                                 </div>
@@ -253,7 +178,7 @@
                     <p class="text-danger">No Product to show</p>
                 @endforelse
                 <li class="col-12 text-center">
-                    <a class="loadmore-btn" href="javascript:void(0);">Load More</a>
+                    {{--                    <a class="loadmore-btn" href="javascript:void(0);">Load More</a>--}}
                 </li>
             </ul>
         </div>
@@ -281,6 +206,7 @@
                                 </div>
                                 <div class="test-img2">
                                     <img src="{{ asset('uploads/testimonial_photos/'.$testimonial->client_photo) }}"
+                                         style="width: 140px;height: 130px"
                                          alt="">
                                 </div>
                             </div>
