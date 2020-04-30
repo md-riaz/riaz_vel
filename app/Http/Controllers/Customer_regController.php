@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class Customer_regController extends Controller
 {
@@ -21,10 +22,12 @@ class Customer_regController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => 'required'
         ]);
-        User::create($validateData + [
-                'role' => 2
-            ]);
-        return redirect('checkout');
-
+        User::create([
+            'name' => request()->name,
+            'email' => request()->email,
+            'role' => 2,
+            'password' => Hash::make(request()->password)
+        ]);
+        return redirect('login');
     }
 }
